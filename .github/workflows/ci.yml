@@ -25,4 +25,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.actor }}/mu-attendance-logger:latest
+          tags: ghcr.io/thesa1/mu-attendance-logger:latest
