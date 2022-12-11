@@ -24,6 +24,5 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/arm64
           push: true
           tags: ghcr.io/thesa1/mu-attendance-logger:latest
