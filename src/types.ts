@@ -1,5 +1,5 @@
 export type Attendance = {
-  date: string;
+  date: Date;
   subject: string;
   status: "Present" | "Absent" | "Other";
   time: string;

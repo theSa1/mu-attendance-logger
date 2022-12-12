@@ -1,9 +1,9 @@
+import { PrismaClient } from "@prisma/client";
 import express from "express";
-import { JsonDB } from "node-json-db";
 
 const port = process.env.PORT || 3000;
 
-export const runServer = async (db: JsonDB) => {
+export const runServer = async (prisma: PrismaClient) => {
   const app = express();
 
   app.get("/", (req, res) => {
@@ -16,11 +16,7 @@ export const runServer = async (db: JsonDB) => {
 
   app.get("/attendance", async (req, res) => {
     if (req.headers.authorization === process.env.SERVER_SEC) {
-      if (await db.exists("/attendance")) {
-        res.send(await db.getData("/attendance"));
-      } else {
-        res.send([]);
-      }
+      res.send("Authorized!");
     } else {
       res.send("Unauthorized");
     }
