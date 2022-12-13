@@ -16,8 +16,6 @@ nodeSchedule.scheduleJob("0 * * * *", async () => {
   await fetchAllAttendance();
 });
 
-getAcadamicData(1, prisma);
-
 const fetchAllAttendance = async () => {
   const users = await prisma.user.findMany();
 
