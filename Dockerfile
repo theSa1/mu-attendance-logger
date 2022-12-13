@@ -6,13 +6,12 @@ COPY package.json ./
 
 COPY yarn.lock ./
 
-COPY prisma ./prisma/
-
 RUN yarn install --frozen-lockfile
 
-RUN npx prisma generate
 
 COPY . .
+
+RUN yarn prisma generate
 
 VOLUME /usr/src/app/prisma/main.db
 
