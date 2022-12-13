@@ -25,12 +25,15 @@ export const login = async (
 
   const data = await res.json();
 
+  console.log(data);
+  console.log(userId);
+
   await prisma.user.update({
     where: {
       id: userId,
     },
     data: {
-      jws: data.ObjSec,
+      jws: data[0].ObjSec,
     },
   });
 
