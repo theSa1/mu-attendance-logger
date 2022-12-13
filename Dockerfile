@@ -10,7 +10,7 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-VOLUME /usr/src/app/db.json
+VOLUME /usr/src/app/prisma/main.db
 
 EXPOSE 8080
 
