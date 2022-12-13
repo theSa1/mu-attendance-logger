@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { getAcadamicData } from "./getAcadamicData";
 
 export const login = async (
   userId: number,
@@ -32,6 +33,8 @@ export const login = async (
       jws: data.ObjSec,
     },
   });
+
+  await getAcadamicData(userId, prisma);
 
   if (cb) {
     cb();

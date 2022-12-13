@@ -6,6 +6,8 @@ const port = process.env.PORT || 3000;
 export const runServer = async (prisma: PrismaClient) => {
   const app = express();
 
+  app.use(express.json());
+
   app.get("/", (req, res) => {
     if (req.headers.authorization === process.env.SERVER_SEC) {
       res.send("Authorized!");
@@ -15,8 +17,23 @@ export const runServer = async (prisma: PrismaClient) => {
   });
 
   app.get("/attendance", async (req, res) => {
+    const { userId } = req.query;
+
+    if (typeof userId !== "number") return res.send("No user id provided");
+
     if (req.headers.authorization === process.env.SERVER_SEC) {
-      res.send("Authorized!");
+      const attendance = await prisma.attendance.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          subject: true,
+        },
+      });
+
+      console.log();
+
+      res.send(attendance);
     } else {
       res.send("Unauthorized");
     }

@@ -21,8 +21,6 @@ export const getAttendance = async (userId: number, prisma: PrismaClient) => {
     )}`
   );
 
-  console.log(res.url);
-
   const html = await res.text();
 
   const root = parse(html);

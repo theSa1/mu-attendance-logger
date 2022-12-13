@@ -16,6 +16,7 @@ model User {
   jws              String?
   // password         String
   attendance       Attendance[]
+  Subjects         Subject[]
 }
 
 model Attendance {
@@ -24,25 +25,23 @@ model Attendance {
   userId         Int
   date           DateTime
   status         String
-  subject        String
   type           String
   time           String
-  faculty        String
   firstDiscoverd DateTime
-  // subjectId      Int
-  // subject        Subject   @relation(fields: [subjectId], references: [id])
-  // facultyId      Int
-  // faculty        Faculty   @relation(fields: [facultyId], references: [id])
+  subjectId      Int
+  subject        Subject  @relation(fields: [subjectId], references: [id])
 }
 
-// model Subject {
-//   id        Int      @id @default(autoincrement())
-//   name      String
-//   attendance Attendance[]
-// }
-
-// model Faculty {
-//   id        Int      @id @default(autoincrement())
-//   name      String
-//   attendance Attendance[]
-// }
+model Subject {
+  id                Int          @id @default(autoincrement())
+  name              String
+  code              String
+  facultyContact    String
+  facultyLocation   String
+  facultyProfilePic String
+  facultyName       String
+  subId             Int
+  userId            Int          @map("subjectId")
+  user              User         @relation(fields: [userId], references: [id])
+  attendance        Attendance[]
+}

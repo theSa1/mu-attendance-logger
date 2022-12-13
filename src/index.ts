@@ -3,6 +3,8 @@ import * as dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { runServer } from "./server";
 import { getAttendance } from "./functions/getAttendance";
+import { getData } from "./functions/getData";
+import { getAcadamicData } from "./functions/getAcadamicData";
 
 const prisma = new PrismaClient();
 
@@ -14,6 +16,8 @@ nodeSchedule.scheduleJob("0 * * * *", async () => {
   await fetchAllAttendance();
 });
 
+getAcadamicData(1, prisma);
+
 const fetchAllAttendance = async () => {
   const users = await prisma.user.findMany();
 
@@ -21,3 +25,5 @@ const fetchAllAttendance = async () => {
     await getAttendance(user.id, prisma);
   }
 };
+
+fetchAllAttendance();

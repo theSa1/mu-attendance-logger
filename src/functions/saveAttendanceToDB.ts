@@ -10,10 +10,11 @@ export const saveAttendanceToDB = async (
     const isCopy = await prisma.attendance.findFirst({
       where: {
         date: attendance.date,
-        subject: attendance.subject,
         type: attendance.type,
-        faculty: attendance.faculty,
         userId: userId,
+        subject: {
+          code: attendance.subject,
+        },
       },
     });
 
@@ -21,14 +22,20 @@ export const saveAttendanceToDB = async (
       return;
     }
 
+    const subject = await prisma.subject.findFirst({
+      where: {
+        code: attendance.subject,
+        userId: userId,
+      },
+    });
+
     await prisma.attendance.create({
       data: {
         date: attendance.date,
-        subject: attendance.subject,
+        subjectId: subject.id,
         status: attendance.status,
         time: attendance.time,
         type: attendance.type,
-        faculty: attendance.faculty,
         firstDiscoverd: attendance.firstDiscovered,
         userId: userId,
       },
